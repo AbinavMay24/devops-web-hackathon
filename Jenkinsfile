@@ -37,7 +37,7 @@ pipeline {
       stage('Deploy') {
          steps {
             echo 'In Deploy stage'
-          //  mail bcc: '', body: 'build Deployed successfully', cc: '', from: '', replyTo: '', subject: 'Attn :DevOps', to: 'abinav.may24@gmail.com'         }
+             }
       
             
 
