@@ -1,6 +1,6 @@
 def projectProperties = [
         buildDiscarder(logRotator(artifactDaysToKeepStr: '20', artifactNumToKeepStr: '20', daysToKeepStr: '20', numToKeepStr: '20')),
-        [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/veersudhir83/devops-web-maven.git/']
+        [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/AbinavMay24/devops-web-hackathon.git/']
         //,pipelineTriggers([pollSCM('H/10 * * * *')])
 ]
 
@@ -33,12 +33,6 @@ try {
         def sonarHome
         def SONAR_HOST_URL = 'http://localhost:9000'
 
-        // Logic for Slack Notification Service
-        def slackBaseUrl = 'https://defaultgrouptalk.slack.com/services/hooks/jenkins-ci/'
-        def slackChannel = '#general'
-        def slackTeamDomain = 'defaultgrouptalk'
-        def slackMessagePrefix = "Job ${env.JOB_NAME}:${env.BUILD_NUMBER}"
-        def slackTokenCredentialId = 'ecd292a7-bf0e-45c9-b599-aeb317ce2170' // replace with right one from jenkins credentials details
 
         // color can be good, warning, danger or anything
         slackSend baseUrl: "${slackBaseUrl}", channel: "${slackChannel}", color: "good", message: "${slackMessagePrefix} -> Build Started", teamDomain: "${slackTeamDomain}", tokenCredentialId: "${slackTokenCredentialId}"
