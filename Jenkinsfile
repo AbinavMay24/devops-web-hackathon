@@ -76,42 +76,6 @@ pipeline {
          stage('Publish') {
             try {
               
-                    
-                        dir('devops-web-hackathon/') {
-                            if (fileExists('target/devops-web-hackathon.jar')) {
-                                // upload artifactory and also publish build info
-                                artifactoryPublishInfo = artifactoryServer.upload(uploadMavenArtifactUnix)
-                                artifactoryPublishInfo.retention maxBuilds: 5
-                                // and publish build info to artifactory
-                                artifactoryServer.publishBuildInfo(artifactoryPublishInfo)
-                            } else {
-                                error 'Publish: Failed during file upload/publish to artifactory'
-                            }
-                        }
-                        // TODO: Work on this
-                        /*causing Error: Error occurred for request CONNECT localhost:8081 HTTP/1.1:
-                        sun.security.validator.ValidatorException: PKIX path building failed:
-                        sun.security.provider.certpath.SunCertPathBuilderException:
-                        unable to find valid certification path to requested target.*/
-
-                        /*
-                        artifactoryServer.download(downloadAppConfigUnix)
-                        dir('downloadsFromArtifactory/') {
-                            sh '''
-                                curl -uadmin:APTvW3dVn6kUTbS -O "http://localhost:8081/artifactory/generic-local/Applications/DevOps/devops-web-maven/DEV/appConfig.json"
-                                FILE=appConfig.json
-                                TEMP=temp.json
-                                if [ -f $FILE ]
-                                then
-                                echo "File $FILE exists."
-                                mv $FILE $TEMP
-                                command_publish="jq '.component[0].Build_Number = ${BUILD_NUMBER}' $TEMP > $FILE"
-                                eval $command_publish
-                                fi
-                            '''
-                        }
-                        */
-                    } else {
                         dir('devops-web-hackathon\\') {
                             if (fileExists('target\\devops-web-hackathon.jar')) {
                                 // upload artifactory and also publish build info
