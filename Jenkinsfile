@@ -8,18 +8,11 @@ properties(projectProperties)
 
 try {
     node {
-        def mvnHome
-        def mvnAnalysisTargets = '-P metrics pmd:pmd test javadoc:javadoc '
-        def antHome
         def artifactoryPublishInfo
         def artifactoryDownloadInfo
         def artifactoryServer
         def isArchivalEnabled = true //params.IS_ARCHIVAL_ENABLED // Enable if you want to archive files and configs to artifactory
-        def isSonarAnalysisEnabled = true //params.IS_ANALYSIS_ENABLED // Enable if you want to analyze code with sonarqube
-        def isDeploymentEnabled = true //params.IS_DEPLOYMENT_ENABLED // Enable if you want to deploy code on app server
-        def isSeleniumTestingEnabled = true //params.IS_SELENIUM_TESTING_ENABLED // Enable if you want to generate reports
-        def isReportsEnabled = true //params.IS_REPORTS_ENABLED // Enable if you want to generate reports
-
+  
         def appName = 'devops-web-maven'// application name currently in progress
         def appEnv  // application environment currently in progress
         def artifactName = appName // name of the war/jar/ear in artifactory
@@ -32,11 +25,7 @@ try {
         def artifactoryTempFolder = 'downloadsFromArtifactory' // name of the local temp folder where file(s) from artifactory get downloaded
         def sonarHome
         def SONAR_HOST_URL = 'http://localhost:9000'
-
-
-        // color can be good, warning, danger or anything
-        slackSend baseUrl: "${slackBaseUrl}", channel: "${slackChannel}", color: "good", message: "${slackMessagePrefix} -> Build Started", teamDomain: "${slackTeamDomain}", tokenCredentialId: "${slackTokenCredentialId}"
-
+            
 
         if (isArchivalEnabled) {
             // Artifactory server id configured in the jenkins along with credentials
