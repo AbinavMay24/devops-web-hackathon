@@ -198,11 +198,12 @@ pipeline {
       stage('Deploy') {
          steps {
             echo 'In Deploy stage'
-             }
-      
-            
-
+             }      
+           
       }
+   
    }
 }
-    }
+} catch (exc) {
+    error "Caught: ${exc}"
+}
