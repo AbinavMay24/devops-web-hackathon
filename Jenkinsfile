@@ -75,9 +75,8 @@ pipeline {
       }
          stage('Publish') {
             try {
-                if (isArchivalEnabled) {
-                    echo 'Publish Artifacts & appConfig.json in progress'
-                    if (isUnix()) {
+              
+                    
                         dir('devops-web-hackathon/') {
                             if (fileExists('target/devops-web-hackathon.jar')) {
                                 // upload artifactory and also publish build info
