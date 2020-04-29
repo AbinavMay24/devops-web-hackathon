@@ -1,55 +1,9 @@
-def projectProperties = [
-        buildDiscarder(logRotator(artifactDaysToKeepStr: '20', artifactNumToKeepStr: '20', daysToKeepStr: '20', numToKeepStr: '20')),
-        [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/AbinavMay24/devops-web-hackathon.git/']
-        //,pipelineTriggers([pollSCM('H/10 * * * *')])
-]
 
-properties(projectProperties)
-
-try {
-    node {
-        def artifactoryPublishInfo
-        def artifactoryDownloadInfo
-        def artifactoryServer
-        def isArchivalEnabled = true //params.IS_ARCHIVAL_ENABLED // Enable if you want to archive files and configs to artifactory
-  
-        def appName = 'devops-web-maven'// application name currently in progress
-        def appEnv  // application environment currently in progress
-        def artifactName = appName // name of the war/jar/ear in artifactory
-        def artifactExtension = "jar" // extension of the war/jar/ear - for both target directory and artifactory
-        def artifactoryRepoName = 'DevOps' // repo name in artifactory
-        def artifactoryAppName = appName // application name as per artifactory
-
-        def buildNumber = env.BUILD_NUMBER
-        def workspaceRoot = env.WORKSPACE
-        def artifactoryTempFolder = 'downloadsFromArtifactory' // name of the local temp folder where file(s) from artifactory get downloaded
-        def sonarHome
-        def SONAR_HOST_URL = 'http://localhost:9000'
-            
-
-        if (isArchivalEnabled) {
             // Artifactory server id configured in the jenkins along with credentials
-            artifactoryServer = Artifactory.server 'Artifactory'
-        }
+            artifactoryServer = Artifactory.server 'Artifactory-oss-5.10.3'
+       def artifactoryPublishInfo
 
-        // to download appConfig.json files from artifactory
-        def downloadAppConfigUnix = """{
-            "files": [
-                {
-                    "pattern": "generic-local/Applications/${artifactoryRepoName}/${artifactoryAppName}/${appEnv}/appConfig.json",
-                    "target": "${workspaceRoot}/${artifactoryTempFolder}/"
-                }
-            ]
-        }"""
-
-        def downloadAppConfigWindows = """{
-            "files": [
-                {
-                    "pattern": "generic-local/Applications/${artifactoryRepoName}/${artifactoryAppName}/${appEnv}/appConfig.json",
-                    "target": "${workspaceRoot}/${artifactoryTempFolder}/"
-                }
-            ]
-        }"""
+    
 
         def uploadAppConfigUnix = """{
             "files": [
@@ -187,6 +141,4 @@ pipeline {
    
    }
 }
-} catch (exc) {
-    error "Caught: ${exc}"
-}
+
